@@ -37,6 +37,13 @@ class Worm():
 
         self.length = 1
         self.facing = "right"
+        self.previous_facing = self.facing
+
+        self.up = False
+        self.down = False
+        self.right = False
+        self.left = False
+        
 
         self.part = pygame.Rect(self.posx, self.posy, self.size, self.size)
 
@@ -44,14 +51,11 @@ class Worm():
         self.worm_butt_last_position_y = self.posy
 
 
-    def try_to_math(self):
-        za = (self.posx/self.speed)/4 % 1
-        if za == 0:
-            print("za" "YOOOLO")
-        if za > 0:
-            print("BOOOO")
-        #if isinstance(int((self.posx/self.speed)/4, int)) == True:
-            #print("TRUE")
+    def reset_values(self):
+            self.up = False
+            self.down = False
+            self.left = False
+            self.right = False
 
     def update(self):
         za = (self.posx/self.speed)/4 % 1
@@ -62,38 +66,83 @@ class Worm():
 
         self.part = pygame.Rect(self.posx, self.posy, self.size, self.size)
         pygame.draw.rect(self.screen, (255, 255, 255), self.part, 1)
+
+
         if self.facing == "up":
             if za == 0:
                 self.posy = self.posy - self.speed
-                self.facing = None
             else:
-                pass
+                if self.previous_facing == "left":
+                    self.posx = self.posx - self.speed
+
+                if self.previous_facing == "right":
+                    self.posx = self.posx + self.speed
+
+                
         if self.facing == "down":
             if za == 0:
                 self.posy = self.posy + self.speed
+            else:
+                if self.previous_facing == "left":
+                    self.posx = self.posx - self.speed
+
+                if self.previous_facing == "right":
+                    self.posx = self.posx + self.speed
+
         if self.facing == "left":
             if ba == 0:
                 self.posx = self.posx - self.speed
+            else:
+                if self.previous_facing == "up":
+                    self.posy = self.posy - self.speed
+                
+                if self.previous_facing == "down":
+                    self.posy = self.posy + self.speed
+
         if self.facing == "right":
             if ba == 0:
                 self.posx = self.posx + self.speed
+            else:
+                if self.previous_facing == "up":
+                    self.posy = self.posy - self.speed
+                
+                if self.previous_facing == "down":
+                    self.posy = self.posy + self.speed
         
 
         
         
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] and self.up == False:
+            self.up = True
+            self.previous_facing = self.facing
             self.facing = "up"
-        if keys[pygame.K_DOWN]:
+            
+            print(self.previous_facing)
+
+        if keys[pygame.K_DOWN] and self.down == False:
+            self.down = True
+            self.previous_facing = self.facing
             self.facing = "down"
-        if keys[pygame.K_LEFT]:
+            print(self.previous_facing)
+
+
+        if keys[pygame.K_LEFT] and self.left == False:
+            self.left = True
+            self.previous_facing = self.facing
             self.facing = "left"
-        if keys[pygame.K_RIGHT]:
+            print(self.previous_facing)
+
+        if keys[pygame.K_RIGHT] and self.right == False:
+            self.right = True
+            self.previous_facing = self.facing
             self.facing = "right"
+            print(self.previous_facing)
+
         if keys[pygame.K_SPACE]:
             pass
-            
+        
 
     def eat(self):
         pass

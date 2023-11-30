@@ -14,7 +14,7 @@ class Game():
 
         self.screen = pygame.display.set_mode((self.screen_width, screen_height))
         self.map = Map(self.screen, self.screen_width, self.screen_height)
-        self.worm = Worm(self.screen, posx=100, posy=100, size=20, speed=5)
+        self.worm = Worm(self.screen, posx=600, posy=600, size=20, speed=5)
 
         self.clock = pygame.time.Clock()
 
