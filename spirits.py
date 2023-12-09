@@ -1,7 +1,7 @@
 import pygame
 import time
 
-class Map():
+"""class Map():
 
     def __init__(self, screen, screen_width, screen_height):
         self.screen = screen
@@ -23,7 +23,7 @@ class Map():
                 b += 1
                 print(b)
             posy = posy + height
-            posx = initial_posx
+            posx = initial_posx"""
 
 
 class Worm():
@@ -52,15 +52,17 @@ class Worm():
         self.worm_butt_last_position_x = self.posx
         self.worm_butt_last_position_y = self.posy
 
+        self.turning_cord = None
+
+        self.done = False
+
 
     def reset_values(self):
-            self.up = False
-            self.down = False
-            self.left = False
-            self.right = False
+        self.done = False
+
 
     def update(self):
-        
+
         #UPPDATERAR ORMEN
         self.part = pygame.Rect(self.posx, self.posy, self.size, self.size)
         self.worm_butt_last_position_x = self.posx
@@ -79,6 +81,10 @@ class Worm():
         if self.facing == "up":
             if perfect_line_with_x == 0:
                 self.posy = self.posy - self.speed
+                if not self.done:
+                    self.turning_cord = self.posx, self.posy + 5
+                    print("this is yeah", self.turning_cord)
+                    self.done = True
             else:
                 if self.previous_facing == "left":
                     self.posx = self.posx - self.speed
@@ -89,12 +95,16 @@ class Worm():
         if self.facing == "down":
             if perfect_line_with_x == 0:
                 self.posy = self.posy + self.speed
+                
+
             else:
                 if self.previous_facing == "left":
                     self.posx = self.posx - self.speed
 
                 if self.previous_facing == "right":
                     self.posx = self.posx + self.speed
+                self.turning_cord = self.posx, self.posy - 20
+                print("this is yeah", self.turning_cord)
 
         if self.facing == "left":
             if perfect_line_with_y == 0:
@@ -121,14 +131,14 @@ class Worm():
         
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP] and self.up == False and self.facing_number != 1:
+        if keys[pygame.K_UP] and self.up == False and self.facing_number != 1 and self.facing != "down":
             self.facing_number = 1
             self.previous_facing = self.facing
             self.facing = "up"
             self.reset_values()
             print(self.previous_facing)
 
-        if keys[pygame.K_DOWN] and self.down == False and self.facing_number != 2:
+        if keys[pygame.K_DOWN] and self.down == False and self.facing_number != 2 and self.facing != "up":
             self.facing_number = 2
             self.previous_facing = self.facing
             self.facing = "down"
@@ -136,14 +146,14 @@ class Worm():
             print(self.previous_facing)
 
 
-        if keys[pygame.K_LEFT] and self.left == False and self.facing_number != 3:
+        if keys[pygame.K_LEFT] and self.left == False and self.facing_number != 3 and self.facing != "right":
             self.facing_number = 3
             self.previous_facing = self.facing
             self.facing = "left"
             self.reset_values()
             print(self.previous_facing)
 
-        if keys[pygame.K_RIGHT] and self.right == False and self.facing_number != 4:
+        if keys[pygame.K_RIGHT] and self.right == False and self.facing_number != 4 and self.facing != "left":
             self.facing_number = 4
             self.previous_facing = self.facing
             self.facing = "right"
