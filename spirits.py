@@ -121,14 +121,14 @@ class Worm():
         
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP] and self.up == False and self.facing_number != 1:
+        if keys[pygame.K_UP] and self.up == False and self.facing_number != 1 and self.facing != "down":
             self.facing_number = 1
             self.previous_facing = self.facing
             self.facing = "up"
             self.reset_values()
             print(self.previous_facing)
 
-        if keys[pygame.K_DOWN] and self.down == False and self.facing_number != 2:
+        if keys[pygame.K_DOWN] and self.down == False and self.facing_number != 2  and self.facing != "up":
             self.facing_number = 2
             self.previous_facing = self.facing
             self.facing = "down"
@@ -136,14 +136,14 @@ class Worm():
             print(self.previous_facing)
 
 
-        if keys[pygame.K_LEFT] and self.left == False and self.facing_number != 3:
+        if keys[pygame.K_LEFT] and self.left == False and self.facing_number != 3 and self.facing != "right":
             self.facing_number = 3
             self.previous_facing = self.facing
             self.facing = "left"
             self.reset_values()
             print(self.previous_facing)
 
-        if keys[pygame.K_RIGHT] and self.right == False and self.facing_number != 4:
+        if keys[pygame.K_RIGHT] and self.right == False and self.facing_number != 4 and self.facing != "left":
             self.facing_number = 4
             self.previous_facing = self.facing
             self.facing = "right"
